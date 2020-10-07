@@ -48,7 +48,7 @@ snippet	{
    name     = "Track response"
    type     = "fetch"
    priority = 8
-   content = " # Tag the response so that we can track whether it came from a\n # customer origin (and not a Fastly shield POP) \n set beresp.http.redirectchase_isorigin = req.backend.is_origin;
+   content = "# Tag the response so that we can track whether it came from a\n # customer origin (and not a Fastly shield POP) \n set beresp.http.redirectchase_isorigin = req.backend.is_origin;"
 }
 
   force_destroy = true

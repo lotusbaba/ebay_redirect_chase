@@ -55,7 +55,7 @@ snippet {
   name	= "Redirect chase"
   type	= "deliver"
   priority = 8
-  content = "declare local var.maxRedirects INTEGER; \n declare local var.curRedirects INTEGER; \n declare local var.redirectPath STRING; \n declare local var.redirectHost STRING; \n set var.maxRedirects = 2;" 
+  content = "declare local var.maxRedirects INTEGER;\n declare local var.curRedirects INTEGER;\n declare local var.redirectPath STRING;\n declare local var.redirectHost STRING;\n set var.maxRedirects = 2;" 
 }
 
   force_destroy = true

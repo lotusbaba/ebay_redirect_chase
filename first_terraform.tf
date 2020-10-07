@@ -27,7 +27,7 @@ resource "fastly_service_v1" "redirect_chase_terraform_service" {
    name     = "Change_jpg_ttl"
    type     = "fetch"
    priority = 8
-   content = "if ( req.url ~ \"\\.(jpeg|jpg|gif)$\" ) {\n # jpeg/gif TTL\n set beresp.ttl = 172800s;\n }\n set beresp.http.Cache-Control = \"max-age=\" beresp.ttl;\n	set req.http.host = "deciduous-impossible-expansion.glitch.me";"
+   content = "if ( req.url ~ \"\\.(jpeg|jpg|gif)$\" ) {\n # jpeg/gif TTL\n set beresp.ttl = 172800s;\n }\n set beresp.http.Cache-Control = \"max-age=\" beresp.ttl;"
 }
 
 snippet {

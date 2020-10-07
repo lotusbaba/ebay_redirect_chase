@@ -17,13 +17,19 @@ resource "fastly_service_v1" "redirect_chase_terraform_service" {
     comment = "Redirect Chase Terraform demo"
   }
 
+  default_host = "run.mocky.io"
+  default_ttl  = "3600"
+
   backend {
     address = "run.mocky.io"
+    auto_loadbalance      = "false"
     name    = "From fiddle b15757c0"
     port    = 443
     ssl_cert_hostname     = "run.mocky.io"
     ssl_check_cert        = "true"
-    use_ssl = "true"
+    ssl_sni_hostname      = "run.mocky.io"
+    use_ssl               = "true"
+    weight                = "100"
   }
 
  snippet {

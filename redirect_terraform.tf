@@ -55,7 +55,7 @@ snippet {
   name	= "Redirect chase"
   type	= "deliver"
   priority = 8
-  content = "declare local var.maxRedirects INTEGER; \n declare local var.curRedirects INTEGER; \n declare local var.redirectPath STRING; \n declare local var.redirectHost STRING; \n set var.maxRedirects = 2; \n set var.curRedirects = std.atoi(if (req.http.redirectchase_restart, req.http.redirectchase_restart, \"0\")); \n # Perform an internal redirect if \n if ( \n resp.status >= 300 && resp.status < 400 &&            # the response is a redirect \n resp.http.redirectchase_isorigin &&                   # and it came from a customer origin \n var.curRedirects < var.maxRedirects &&                # and we haven't exceeded a maximum number of redirects \n resp.http.location ~ \"^(?:https?://([^/]+))?(/.*)?$\") # and there is a valid location header \n { }"
+  content = "declare local var.maxRedirects INTEGER; \n declare local var.curRedirects INTEGER; \n declare local var.redirectPath STRING; \n declare local var.redirectHost STRING; \n set var.maxRedirects = 2; \n \n if ( \n resp.status >= 300 && resp.status < 400 &&            # the response is a redirect \n resp.http.redirectchase_isorigin &&                   # and it came from a customer origin \n var.curRedirects < var.maxRedirects &&                # and we haven't exceeded a maximum number of redirects \n resp.http.location ~ \"^(?:https?://([^/]+))?(/.*)?$\") # and there is a valid location header \n { }"
 }
 
   force_destroy = true

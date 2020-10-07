@@ -27,7 +27,7 @@ resource "fastly_service_v1" "redirect_chase_terraform_service" {
    name     = "Force clustering"
    type     = "recv"
    priority = 8
-   content = "if (req.restarts == 0) {	\n unset req.http.redirectchase_restart; \n } \n # If restarting for a redirect, re-enable clustering \n if (req.http.redirectchase_restart) { \n set req.http.Fastly-Force-Shield = \"1\"; \n set req.http.host = \"run.mocky.io\"; \n}"
+   content = "if (req.restarts == 0) {	\n unset req.http.redirectchase_restart; \n } \n # If restarting for a redirect, re-enable clustering \n if (req.http.redirectchase_restart) { \n set req.http.Fastly-Force-Shield = \"1\";\n}\n set req.http.host = \"run.mocky.io\"; \n"
 }
 
 snippet {

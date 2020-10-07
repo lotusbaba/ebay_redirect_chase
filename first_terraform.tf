@@ -55,33 +55,7 @@ snippet {
   name	= "Redirect chase"
   type	= "deliver"
   priority = 8
-  content = "declare local var.maxRedirects INTEGER;
-declare local var.curRedirects INTEGER;
-declare local var.redirectPath STRING;
-declare local var.redirectHost STRING;
-
-set var.maxRedirects = 2;
-set var.curRedirects = std.atoi(if (req.http.redirectchase_restart, req.http.redirectchase_restart, \"0\"));
-
-# Perform an internal redirect if...
-if (
-  resp.status >= 300 && resp.status < 400 &&            # the response is a redirect
-  resp.http.redirectchase_isorigin &&                   # and it came from a customer origin
-  var.curRedirects < var.maxRedirects &&                # and we haven't exceeded a maximum number of redirects
-  resp.http.location ~ \"^(?:https?://([^/]+))?(/.*)?$\") # and there's a valid location header
-{
-  set var.redirectHost = re.group.1;
-  set var.redirectPath = re.group.2;
-  
-  # Only do so if the location header does not specify a host, or the host matches the client-side host header, or a whitelist of 'local' domains
-  if (var.redirectHost == \"\" || var.redirectHost == req.http.host) {
-    set req.url = if (var.redirectPath, var.redirectPath, \"/\");
-    set var.curRedirects += 1;
-    set req.http.redirectchase_restart = var.curRedirects;
-    restart;
-  }
-}
-unset resp.http.redirectchase_isorigin;"
+  content = "declare local var.maxRedirects INTEGER; \n declare local var.curRedirects INTEGER; \n declare local var.redirectPath STRING; \n declare local var.redirectHost STRING; \n \n set var.maxRedirects = 2; \n set var.curRedirects = std.atoi(if (req.http.redirectchase_restart, req.http.redirectchase_restart, \"0\")); \n \n # Perform an internal redirect if... \n if ( \n resp.status >= 300 && resp.status < 400 &&            # the response is a redirect \n resp.http.redirectchase_isorigin &&                   # and it came from a customer origin \n var.curRedirects < var.maxRedirects &&                # and we haven't exceeded a maximum number of redirects \n resp.http.location ~ \"^(?:https?://([^/]+))?(/.*)?$\") # and there's a valid location header \n { \n set var.redirectHost = re.group.1; \n set var.redirectPath = re.group.2; \n \n # Only do so if the location header does not specify a host, or the host matches the client-side host header, or a whitelist of 'local' domains \n if (var.redirectHost == \"\" || var.redirectHost == req.http.host) { \n set req.url = if (var.redirectPath, var.redirectPath, \"/\"); \n set var.curRedirects += 1; \n set req.http.redirectchase_restart = var.curRedirects; \n restart; \n } \n } \n unset resp.http.redirectchase_isorigin;"
 }
 
   force_destroy = true

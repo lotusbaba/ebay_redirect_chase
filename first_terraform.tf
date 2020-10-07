@@ -4,13 +4,13 @@ provider "fastly" {
 
 # output varialbles on the console
 output "Fastly-Version" {
-  value = "${fastly_service_v1.redirect_chase_terraform_service.active_version}"
+  value = "fastly_service_v1.redirect_chase_terraform_service.active_version"
 }
 
 # Create a Service
 
 resource "fastly_service_v1" "redirect_chase_terraform_service" {
-  name = "Second Fastly Terraform Service"
+  name = "Redirect Chase Terraform Service"
 
   domain {
     name    = "abcd.redirect.com"

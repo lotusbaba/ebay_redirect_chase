@@ -13,7 +13,7 @@ resource "fastly_service_v1" "redirect_chase_terraform_service" {
   name = "Redirect Chase Terraform Service"
 
   domain {
-    name    = "abcd.redirect.com"
+    name    = "abcd-redirect-com.global.ssl.fastly.net"
     comment = "Redirect Chase Terraform demo"
   }
 

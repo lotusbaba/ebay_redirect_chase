@@ -21,6 +21,7 @@ resource "fastly_service_v1" "redirect_chase_terraform_service" {
     address = "run.mocky.io"
     name    = "From fiddle b15757c0"
     port    = 443
+    use_ssl = "true"
   }
 
  snippet {

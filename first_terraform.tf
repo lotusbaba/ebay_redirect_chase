@@ -28,7 +28,9 @@ resource "fastly_service_v1" "redirect_chase_terraform_service" {
    type     = "fetch"
    priority = 8
    content = "if ( req.url ~ \"\\.(jpeg|jpg|gif)$\" ) {\n # jpeg/gif TTL\n set beresp.ttl = 172800s;\n }\n set beresp.http.Cache-Control = \"max-age=\" beresp.ttl;\n	set req.http.host = "deciduous-impossible-expansion.glitch.me";"
+}
 
+snippet {
    name     = "Override_host"
    type     = "recv"
    priority = 8

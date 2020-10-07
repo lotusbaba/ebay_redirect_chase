@@ -51,13 +51,6 @@ snippet	{
    content = " # Tag the response so that we can track whether it came from a\n # customer origin (and not a Fastly shield POP) \n set beresp.http.redirectchase_isorigin = req.backend.is_origin;
 }
 
-snippet {
-  name	= "Redirect chase"
-  type	= "deliver"
-  priority = 8
-  content = "declare local var.maxRedirects INTEGER;\n declare local var.curRedirects INTEGER;\n declare local var.redirectPath STRING;\n declare local var.redirectHost STRING;\n set var.maxRedirects = 2;" 
-}
-
   force_destroy = true
 }
 

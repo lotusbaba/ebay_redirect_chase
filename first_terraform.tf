@@ -4,7 +4,7 @@ provider "fastly" {
 
 # output varialbles on the console
 output "Fastly-Version" {
-  value = "${fastly_service_v1.second_terraform_service.active_version}"
+  value = "${fastly_service_v1.redirect_chase_terraform_service.active_version}"
 }
 
 # Create a Service

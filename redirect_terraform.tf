@@ -67,6 +67,13 @@ snippet	{
    content = "# Tag the response so that we can track whether it came from a\n # customer origin (and not a Fastly shield POP) \n set beresp.http.redirectchase_isorigin = req.backend.is_origin;"
 }
 
+  snippet {
+    content  = "declare local var.maxRedirects INTEGER;\ndeclare local var.curRedirects INTEGER;\ndeclare local var.redirectPath STRING;\ndeclare local var.redirectHost STRING;\n\nset var.maxRedirects = 2;\nset var.curRedirects = std.atoi(if (req.http.redirectchase_restart, req.http.redirectchase_restart, \"0\"));\n\n# Perform an internal redirect if...\nif (\n  resp.status >= 300 \u0026\u0026 resp.status < 400 \u0026\u0026            # the response is a redirect\n  resp.http.redirectchase_isorigin \u0026\u0026                   # and it came from a customer origin\n  var.curRedirects < var.maxRedirects \u0026\u0026                # and we haven't exceeded a maximum number of redirects\n  resp.http.location ~ \"^(?:https?://([^/]+))?(/.*)?$\") # and there's a valid location header\n{\n  set var.redirectHost = re.group.1;\n  set var.redirectPath = re.group.2;\n  \n  # Only do so if the location header does not specify a host, or the host matches the client-side host header, or a whitelist of 'local' domains\n  if (var.redirectHost == \"\" || var.redirectHost == req.http.host || var.redirectHost ~ \"^(.+\\.)?fiddle\\.fastlydemo\\.net$\") {\n    set req.url = if (var.redirectPath, var.redirectPath, \"/\");\n    set var.curRedirects += 1;\n    set req.http.redirectchase_restart = var.curRedirects;\n    restart;\n  }\n}\nunset resp.http.redirectchase_isorigin;"
+    name     = "Redirect chase deliver"
+    priority = "100"
+    type     = "deliver"
+  }
+
   force_destroy = true
 }
 
